@@ -2,9 +2,17 @@
 #include <Arduino.h>
 
 Publisher::Publisher(int pin) {
+    pinMode(pin, INPUT);
     this->pin = pin;
     value = 0;
     subscriberCount = 0;
+}
+
+void Publisher::notify() {
+    for(int i = 0;i<subscriberCount;i++){
+        subscribers[i]->update(value);
+    }
+    Serial.println("Notified subscribers");
 }
 
 void Publisher::setValue(int value) {
@@ -12,7 +20,7 @@ void Publisher::setValue(int value) {
     notify();
 }
 
-void Publisher::subscribe(Subscriber* s) {
+void Publisher::addSubscriber(Subscriber* s) {
     Serial.println("Subscribed");
     if(subscriberCount < MAX_SUBSCRIBERS){
         subscribers[subscriberCount++] = s;
@@ -21,10 +29,9 @@ void Publisher::subscribe(Subscriber* s) {
     else
         Serial.println("Exceeded Max Subscribers");
 
-    
 }
 
-void Publisher::unsubscribe(Subscriber* s) {
+void Publisher::removeSubscriber(Subscriber* s) {
     Serial.print("Subscriber countaa: ");
     Serial.print(subscriberCount);
     Serial.println("Unsubscribed");
@@ -40,9 +47,7 @@ void Publisher::unsubscribe(Subscriber* s) {
     }
 }
 
-void Publisher::interrupt() {
-    setValue(digitalRead(pin));
-}
+
 
 
 

@@ -6,23 +6,25 @@
 
 class Publisher {
 protected:
+    //input pin
     int pin;
 
     Subscriber* subscribers[MAX_SUBSCRIBERS];
-    //The raw value of the publisher(before any processing)
+    //The value
     int value;
     //We need this since we are using a static array
     int subscriberCount;
     //Calls the update method of all subscribers
-    //The notify is abstract since different publishers will process the value differently (button is simple, potentiometer is more complex) 
-    virtual void notify()=0;
+    void notify();
     void setValue(int value);
 public:
     Publisher(int pin);
-    void interrupt();
-    //Adds a subscriber to the list of subscribers and also calls the update method of the subscriber
-    void subscribe(Subscriber* s);
-    void unsubscribe(Subscriber* s);
+    //We update the value if there is a change (The handling of the value is up to the publisher)
+    virtual void handleInput() = 0;
+    //Adds subscriber and calls update
+    void addSubscriber(Subscriber* s);
+    //Removes subscriber
+    void removeSubscriber(Subscriber* s);
 };
 
 #endif

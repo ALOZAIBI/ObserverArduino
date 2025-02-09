@@ -8,9 +8,9 @@ ButtonPublisher::ButtonPublisher(int pin) : Publisher(pin) {
 }
 
 
-void ButtonPublisher::notify() {
-    for(int i = 0;i<subscriberCount;i++){
-        subscribers[i]->update(value);
+void ButtonPublisher::handleInput() {
+    int val = digitalRead(pin);
+    if(val != value){
+        setValue(val);
     }
-    Serial.println("Notified subscribers");
 }

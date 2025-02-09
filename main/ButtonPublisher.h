@@ -3,10 +3,9 @@
 #include "Publisher.h"
 
 class ButtonPublisher : public Publisher {
-private:
-    void notify() override;
 public:
     ButtonPublisher(int pin);
+    void handleInput() override;
 };
 
 #endif

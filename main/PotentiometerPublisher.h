@@ -3,7 +3,8 @@
 #include "Publisher.h"
 
 class PotentiometerPublisher : public Publisher {
-private:
-    void notify() override;
+
+public:
+    void handleInput() override;
 };
 #endif

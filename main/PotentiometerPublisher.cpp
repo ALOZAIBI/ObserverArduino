@@ -1,9 +1,9 @@
 #include "PotentiometerPublisher.h"
 #include <Arduino.h>
 
-void PotentiometerPublisher::notify() {
-    for (Subscriber* s : subscribers) {
-        s->update(value);
+void PotentiometerPublisher::handleInput() {
+    int val = analogRead(pin);
+    if(val != value){
+        setValue(val);
     }
-    Serial.println("Notified subscribers");
 }

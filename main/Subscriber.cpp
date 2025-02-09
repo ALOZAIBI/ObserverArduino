@@ -3,16 +3,17 @@
 #include "Publisher.h"
 #include <Arduino.h>
 
-Subscriber::Subscriber(Publisher& p, int pin) : publisher(p), pin(pin) {
-    pinMode(pin, OUTPUT);
+Subscriber::Subscriber(Publisher& p, int oPin,int iPin) : publisher(p), outputPin(oPin), inputPin(iPin){
+    pinMode(oPin, OUTPUT);
+    pinMode(iPin, INPUT);
 }
 
-void Subscriber::getSubscribed() {
+void Subscriber::subscribe() {
     // Serial.println("I SHOULD BE SUBSCRIBED");
-    publisher.subscribe(this);
+    publisher.addSubscriber(this);
 }
 
-void Subscriber::getUnsubscribed() {
+void Subscriber::unSubscribe() {
     // Serial.println("I SHOULD BE UNSUBSCRIBED");
-    publisher.unsubscribe(this);
+    publisher.removeSubscriber(this);
 }
