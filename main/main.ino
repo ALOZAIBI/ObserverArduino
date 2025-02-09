@@ -9,16 +9,19 @@ const int greenLEDPin = 10;
 const int blueLEDBtnPin = 6;
 const int blueLEDPin = 9;
 
-const int publisherBtn = 2;
+const int potentiometerPin = A7;
+
 // const int bluePin = 9;
 // const int greenPin = 10;
 int val = 0;
 
+
 #include "ButtonPublisher.h"
+#include "PotentiometerPublisher.h"
 
 #include "LEDSubscriber.h"
 
-Publisher* btnPublisher;
+Publisher* potentiometerPublisher;
 
 Subscriber* redLED;
 
@@ -31,18 +34,17 @@ Subscriber* blueLED;
 void setup() {
   Serial.begin(9600);
 
+  potentiometerPublisher = new PotentiometerPublisher(potentiometerPin);
 
-  btnPublisher = new ButtonPublisher(publisherBtn);
-
-  redLED = new LEDSubscriber(*btnPublisher, redLEDPin,redLEDBtnPin);
-  greenLED = new LEDSubscriber(*btnPublisher, greenLEDPin,greenLEDBtnPin);
-  blueLED = new LEDSubscriber(*btnPublisher, blueLEDPin,blueLEDBtnPin);
+  redLED = new LEDSubscriber(*potentiometerPublisher, redLEDPin,redLEDBtnPin);
+  greenLED = new LEDSubscriber(*potentiometerPublisher, greenLEDPin,greenLEDBtnPin);
+  blueLED = new LEDSubscriber(*potentiometerPublisher, blueLEDPin,blueLEDBtnPin);
   
   Serial.println("Yopo");
 }
 
 void loop() {
-  btnPublisher->handleInput();
+  potentiometerPublisher->handleInput();
 
   redLED->handleInput();
   greenLED->handleInput();

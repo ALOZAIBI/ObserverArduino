@@ -4,13 +4,15 @@
 //Constructor
 
 ButtonPublisher::ButtonPublisher(int pin) : Publisher(pin) {
-    pinMode(pin, INPUT);
+
 }
 
 
 void ButtonPublisher::handleInput() {
-    int val = digitalRead(pin);
+    //Currently we hard code the *255 however later on we might want to change this by adding the range as a parameter
+    int modifier = 30;
+    int val = digitalRead(pin) * modifier;
     if(val != value){
-        setValue(val);
+        setValue(val*modifier);
     }
 }

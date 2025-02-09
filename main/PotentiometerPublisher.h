@@ -5,6 +5,7 @@
 class PotentiometerPublisher : public Publisher {
 
 public:
+    PotentiometerPublisher(int pin);
     void handleInput() override;
 };
 #endif

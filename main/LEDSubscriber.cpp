@@ -7,7 +7,7 @@ LEDSubscriber::LEDSubscriber(Publisher& p,int oPin, int iPin) : Subscriber(p,oPi
 
 void LEDSubscriber::update(int value) {
     Serial.println("Updating LED");
-    digitalWrite(outputPin, value);
+    analogWrite(outputPin, value);
 }
 
 void LEDSubscriber::handleInput() {
